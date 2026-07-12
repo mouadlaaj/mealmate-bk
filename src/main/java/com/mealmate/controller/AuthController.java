@@ -31,13 +31,13 @@ public class AuthController {
 	public ResponseEntity<UserResponseDto> register(@Valid @RequestBody RegisterRequestDto registerDto) {
 		 LOGGER.info("Registering new user with email: {}", registerDto.getEmail());
 		UserResponseDto user = authService.registerUser(registerDto);
-		LOGGER.info("User registered successfully with ID: {}", user.getId());
-		 return new ResponseEntity<>(user, HttpStatus.CREATED);
+		  LOGGER.info("User registered successfully with ID: {}", user.getId());
+		return new ResponseEntity<>(user, HttpStatus.CREATED);
 	}
 
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginDto) {
-		  LOGGER.info("Attempting to log in user with email: {}", loginDto.getEmail());
+		LOGGER.info("Attempting to log in user with email: {}", loginDto.getEmail());
 		LoginResponseDto loginResponse = authService.login(loginDto);
 		LOGGER.info("User logged in successfully with email: {}", loginDto.getEmail());
 		return new ResponseEntity<>(loginResponse, HttpStatus.OK);

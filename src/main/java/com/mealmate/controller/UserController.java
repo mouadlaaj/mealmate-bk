@@ -43,6 +43,7 @@ public class UserController {
 	@PutMapping
 	public ResponseEntity<UserResponseDto> updateCurrentUser(@AuthenticationPrincipal UserDetailsImpl currentUser,
 			@Valid @RequestBody UpdateUserRequestDto updateDto) {
+
 		LOGGER.info("Updating profile for user ID: {}", currentUser.getId());
 		UserResponseDto updated = userService.updateUser(currentUser.getId(), updateDto);
 		LOGGER.info("Profile updated successfully for user ID: {}", currentUser.getId());
