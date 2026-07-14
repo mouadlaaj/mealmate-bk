@@ -27,6 +27,9 @@ public class Ingredient {
 	@OneToMany(mappedBy = "ingredient", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
+	@OneToMany(mappedBy = "ingredient", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+	private List<ShoppingListItem> shoppingListItems = new ArrayList<>();
+
 	public Ingredient() {
 	}
 
@@ -52,6 +55,14 @@ public class Ingredient {
 
 	public void setRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
 		this.recipeIngredients = recipeIngredients;
+	}
+
+	public List<ShoppingListItem> getShoppingListItems() {
+		return shoppingListItems;
+	}
+
+	public void setShoppingListItems(List<ShoppingListItem> shoppingListItems) {
+		this.shoppingListItems = shoppingListItems;
 	}
 
 }

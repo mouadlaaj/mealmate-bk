@@ -29,9 +29,9 @@ public class AuthController {
 
 	@PostMapping("/register")
 	public ResponseEntity<UserResponseDto> register(@Valid @RequestBody RegisterRequestDto registerDto) {
-		 LOGGER.info("Registering new user with email: {}", registerDto.getEmail());
+		LOGGER.info("Registering new user with email: {}", registerDto.getEmail());
 		UserResponseDto user = authService.registerUser(registerDto);
-		  LOGGER.info("User registered successfully with ID: {}", user.getId());
+		LOGGER.info("User registered successfully with ID: {}", user.getId());
 		return new ResponseEntity<>(user, HttpStatus.CREATED);
 	}
 

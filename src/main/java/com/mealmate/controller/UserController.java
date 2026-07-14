@@ -53,9 +53,12 @@ public class UserController {
 	@PostMapping("/logout")
 	public ResponseEntity<GenericMessage> logout(HttpServletRequest request,
 			@AuthenticationPrincipal UserDetailsImpl currentUser) {
+
 		Long loggedUserId = currentUser.getId();
 		LOGGER.info("Attempting to log out user ID: {}", loggedUserId);
+
 		GenericMessage logoutResponse = userService.logout(request);
+
 		LOGGER.info("User logged out successfully, user ID: {}", loggedUserId);
 		return new ResponseEntity<>(logoutResponse, HttpStatus.OK);
 	}

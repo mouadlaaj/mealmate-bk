@@ -1,5 +1,5 @@
 
--- Vegetables (50)
+-- ===================== Vegetables (50) =====================
 INSERT IGNORE INTO ingredients (name) VALUES
 ('Tomato'), ('Onion'), ('Garlic'), ('Ginger'), ('Potato'),
 ('Carrot'), ('Cabbage'), ('Cauliflower'), ('Broccoli'), ('Spinach'),
@@ -12,7 +12,7 @@ INSERT IGNORE INTO ingredients (name) VALUES
 ('Brussels Sprouts'), ('Artichoke'), ('Turnip'), ('Parsnip'), ('Fennel Bulb'),
 ('Chives'), ('Watercress'), ('Bok Choy'), ('Banana Flower'), ('Ivy Gourd');
 
--- Fruits (25)
+-- ===================== Fruits (25) =====================
 INSERT IGNORE INTO ingredients (name) VALUES
 ('Apple'), ('Banana'), ('Orange'), ('Lemon'), ('Lime'),
 ('Mango'), ('Grapes'), ('Watermelon'), ('Pineapple'), ('Papaya'),
@@ -20,14 +20,14 @@ INSERT IGNORE INTO ingredients (name) VALUES
 ('Peach'), ('Plum'), ('Kiwi'), ('Avocado'), ('Coconut'),
 ('Dates'), ('Raisins'), ('Fig'), ('Cherry'), ('Apricot');
 
--- Grains, Rice & Pasta (20)
+-- ===================== Grains, Rice & Pasta (20) =====================
 INSERT IGNORE INTO ingredients (name) VALUES
 ('Basmati Rice'), ('White Rice'), ('Brown Rice'), ('Wheat Flour'), ('All Purpose Flour'),
 ('Bread'), ('Pasta'), ('Spaghetti'), ('Macaroni'), ('Noodles'),
 ('Oats'), ('Quinoa'), ('Semolina'), ('Vermicelli'), ('Barley'),
 ('Cornflour'), ('Rice Flour'), ('Bread Crumbs'), ('Couscous'), ('Millet');
 
--- Spices & Herbs (35)
+-- ===================== Spices & Herbs (35) =====================
 INSERT IGNORE INTO ingredients (name) VALUES
 ('Salt'), ('Black Pepper'), ('Turmeric'), ('Cumin'), ('Coriander Powder'),
 ('Red Chili Powder'), ('Garam Masala'), ('Mustard Seeds'), ('Fennel Seeds'), ('Cardamom'),
@@ -37,13 +37,13 @@ INSERT IGNORE INTO ingredients (name) VALUES
 ('Five Spice Powder'), ('Sesame Seeds'), ('Poppy Seeds'), ('Saffron'), ('Vanilla Extract'),
 ('Dry Ginger Powder'), ('Amchur Powder'), ('Chaat Masala'), ('Sambar Powder'), ('Rasam Powder');
 
--- Dairy (12)
+-- ===================== Dairy (12) =====================
 INSERT IGNORE INTO ingredients (name) VALUES
 ('Milk'), ('Butter'), ('Cheese'), ('Paneer'), ('Yogurt'),
 ('Cream'), ('Ghee'), ('Condensed Milk'), ('Mozzarella Cheese'), ('Cheddar Cheese'),
 ('Sour Cream'), ('Buttermilk');
 
--- Proteins - Meat, Fish, Legumes (28)
+-- ===================== Proteins - Meat, Fish, Legumes (28) =====================
 INSERT IGNORE INTO ingredients (name) VALUES
 ('Chicken'), ('Chicken Breast'), ('Egg'), ('Mutton'), ('Beef'),
 ('Pork'), ('Fish'), ('Salmon'), ('Tuna'), ('Shrimp'),
@@ -52,14 +52,14 @@ INSERT IGNORE INTO ingredients (name) VALUES
 ('Masoor Dal'), ('Green Peas'), ('Soybean'), ('Bacon'), ('Sausage'),
 ('Ham'), ('Crab'), ('Duck');
 
--- Oils, Condiments & Sauces (18)
+-- ===================== Oils, Condiments & Sauces (18) =====================
 INSERT IGNORE INTO ingredients (name) VALUES
 ('Olive Oil'), ('Vegetable Oil'), ('Sunflower Oil'), ('Sesame Oil'), ('Coconut Oil'),
 ('Mustard Oil'), ('Soy Sauce'), ('Vinegar'), ('Tomato Ketchup'), ('Mayonnaise'),
 ('Mustard Sauce'), ('Chili Sauce'), ('Worcestershire Sauce'), ('Honey'), ('Maple Syrup'),
 ('Peanut Butter'), ('Tamarind Paste'), ('Tomato Puree');
 
--- Baking Essentials (15)
+-- ===================== Baking Essentials (15) =====================
 INSERT IGNORE INTO ingredients (name) VALUES
 ('Sugar'), ('Brown Sugar'), ('Powdered Sugar'), ('Baking Powder'), ('Baking Soda'),
 ('Yeast'), ('Cocoa Powder'), ('Dark Chocolate'), ('Chocolate Chips'), ('Vanilla Essence'),
