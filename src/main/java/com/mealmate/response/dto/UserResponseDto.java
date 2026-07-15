@@ -4,10 +4,6 @@ import java.time.LocalDateTime;
 
 import com.mealmate.entity.User;
 
-/**
- * Returned instead of the raw User entity so the password hash is never
- * exposed in an API response.
- */
 public class UserResponseDto {
 
 	private Long id;

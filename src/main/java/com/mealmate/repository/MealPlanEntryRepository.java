@@ -14,4 +14,6 @@ public interface MealPlanEntryRepository extends JpaRepository<MealPlanEntry, Lo
 	List<MealPlanEntry> findByMealPlanId(Long mealPlanId);
 
 	Optional<MealPlanEntry> findByIdAndMealPlanId(Long id, Long mealPlanId);
+
+	boolean existsByRecipeId(Long recipeId);
 }

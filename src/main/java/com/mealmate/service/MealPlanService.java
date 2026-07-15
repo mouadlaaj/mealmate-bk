@@ -38,6 +38,9 @@ public class MealPlanService {
 	@Autowired
 	private RecipeRepository recipeRepository;
 
+	@Autowired
+	private ShoppingListService shoppingListService;
+
 	@Transactional
 	public MealPlanResponseDto createMealPlan(Long userId, MealPlanRequestDto requestDto) {
 		User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found."));
@@ -54,7 +57,7 @@ public class MealPlanService {
 			if (requestDto.getEntries() != null && !requestDto.getEntries().isEmpty()) {
 				mealPlan.getEntries().addAll(buildEntries(mealPlan, userId, requestDto.getEntries()));
 			}
-
+			shoppingListService.autoGenerateOrRefresh(userId, mealPlan);
 			MealPlan saved = mealPlanRepository.save(mealPlan);
 
 			LOGGER.info("Meal plan created successfully, ID: {}, user ID: {}", saved.getId(), userId);
@@ -112,8 +115,9 @@ public class MealPlanService {
 					mealPlan.getEntries().addAll(buildEntries(mealPlan, userId, requestDto.getEntries()));
 				}
 			}
-
+			shoppingListService.autoGenerateOrRefresh(userId, mealPlan);
 			MealPlan saved = mealPlanRepository.save(mealPlan);
+
 			LOGGER.info("Meal plan updated successfully, ID: {}, user ID: {}", saved.getId(), userId);
 			return MealPlanResponseDto.from(saved);
 

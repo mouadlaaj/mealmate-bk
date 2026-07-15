@@ -16,6 +16,7 @@ import com.mealmate.entity.RecipeIngredient;
 import com.mealmate.entity.User;
 import com.mealmate.exception.AppException;
 import com.mealmate.exception.NotFoundException;
+import com.mealmate.repository.MealPlanEntryRepository;
 import com.mealmate.repository.RecipeRepository;
 import com.mealmate.repository.UserRepository;
 import com.mealmate.request.dto.RecipeIngredientRequestDto;
@@ -35,6 +36,9 @@ public class RecipeService {
 
 	@Autowired
 	private IngredientService ingredientService;
+
+	@Autowired
+	private MealPlanEntryRepository mealPlanEntryRepository;
 
 	@Transactional
 	public RecipeResponseDto createRecipe(Long userId, RecipeRequestDto requestDto) {
@@ -118,10 +122,13 @@ public class RecipeService {
 	public void deleteRecipe(Long userId, Long recipeId) {
 		Recipe recipe = findOwnedRecipeOrThrow(userId, recipeId);
 
+		if (mealPlanEntryRepository.existsByRecipeId(recipeId)) {
+			throw new AppException("Recipe is used in a meal plan and cannot be deleted.");
+		}
+
 		try {
 			recipeRepository.delete(recipe);
 			LOGGER.info("Recipe deleted successfully, ID: {}, user ID: {}", recipeId, userId);
-
 		} catch (Exception e) {
 			LOGGER.error("Exception occurred while deleting recipe ID: {}, user ID: {}, Error: {}", recipeId, userId,
 					e.getMessage(), e);
