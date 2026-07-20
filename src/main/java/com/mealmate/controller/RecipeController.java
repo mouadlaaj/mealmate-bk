@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,13 +17,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mealmate.request.dto.RecipeRequestDto;
 import com.mealmate.response.dto.GenericMessage;
 import com.mealmate.response.dto.RecipeResponseDto;
 import com.mealmate.security.service.UserDetailsImpl;
 import com.mealmate.service.RecipeService;
+import com.mealmate.service.GroqRecipeImportService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -36,6 +40,16 @@ public class RecipeController {
 
 	@Autowired
 	private RecipeService recipeService;
+
+	@Autowired
+	private GroqRecipeImportService groqRecipeImportService;
+
+	@PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<RecipeRequestDto> importRecipe(@RequestParam(name = "url", required = false) String url,
+			@RequestParam(name = "file", required = false) MultipartFile file) {
+		RecipeRequestDto draft = groqRecipeImportService.importRecipe(url, file);
+		return ResponseEntity.ok(draft);
+	}
 
 	@PostMapping
 	public ResponseEntity<RecipeResponseDto> createRecipe(@AuthenticationPrincipal UserDetailsImpl currentUser,
