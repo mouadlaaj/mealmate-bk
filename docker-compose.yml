@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+
+  mysql:
+    image: mysql:8.4
+    container_name: mealmate-mysql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mealmate
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./mealmate-bk
+
+    container_name: mealmate-backend
+
+    depends_on:
+      - mysql
+
+    ports:
+      - "8001:8001"
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mealmate?createDatabaseIfNotExist=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GROQ_MODEL: ${GROQ_MODEL:-openai/gpt-oss-20b}
+
+      security.jwt.secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./mealmate-ui
+
+    container_name: mealmate-frontend
+
+    depends_on:
+      - backend
+
+    ports:
+      - "3000:3000"
+
+    stdin_open: true
+    tty: true
+
+volumes:
+  mysql-data:
