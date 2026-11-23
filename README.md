@@ -1,59 +1,42 @@
 # MealMate Backend
 
-Spring Boot REST API for MealMate.
+Spring Boot REST API for MealMate. It requires Java 17 and MySQL 8.4. The API listens on port 8001.
 
-## Requirements
+## Local configuration
 
-- Java 17
-- MySQL on port `3306`
+Create a private `.env` beside `docker-compose.yml` for Docker Compose. Fill these entries on your machine using a password manager. Generate a different random value for each password. For `JWT_SECRET`, generate 64 random bytes and Base64-encode them for HS512. Keep this key stable across restarts and all backend instances.
 
-## Run locally
-
-Start MySQL from the project root:
-
-```powershell
-docker compose up -d mysql
+```dotenv
+MYSQL_ROOT_PASSWORD=
+SPRING_DATASOURCE_USERNAME=mealmate
+SPRING_DATASOURCE_PASSWORD=
+JWT_SECRET=
+GROQ_API_KEY=
 ```
 
-Set the Groq API key in the backend terminal:
+Groq is optional and enables recipe imports. Leave its entry empty to run the other features. The application uses the dedicated MySQL user above. For an existing database volume, create or update that user in MySQL, grant access to the `mealmate` schema and rotate the root password in MySQL before restarting. The container sets initial credentials only on a new data directory.
+
+## Run with Docker
+
+Clone `mealmate-ui` next to this backend checkout. From the backend directory run:
 
 ```powershell
-$env:GROQ_API_KEY="your-groq-api-key"
+docker compose config --quiet
+docker compose up -d --build
 ```
 
-Then start the backend:
+If you keep the Compose file in a different directory, set `MEALMATE_BACKEND_CONTEXT` and `MEALMATE_FRONTEND_CONTEXT` to the two checkout paths.
+
+## Run the backend directly
+
+Start the database with `docker compose up -d mysql`. Set `SPRING_DATASOURCE_PASSWORD` and `JWT_SECRET` in the terminal or IDE that starts Java, plus `SPRING_DATASOURCE_USERNAME` if you changed the username. Set `GROQ_API_KEY` there if using recipe imports. Compose reads the local `.env` file automatically. A standalone Java process needs the variables in its environment.
 
 ```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-The API runs on `http://localhost:8001`.
+Swagger UI is available at `http://localhost:8001/swagger-ui/index.html`. Run the tests with `.\mvnw.cmd test` in a test environment.
 
-Swagger UI:
+## Rotating an exposed key
 
-```text
-http://localhost:8001/swagger-ui/index.html
-```
-
-## Database defaults
-
-```text
-Database: mealmate
-Username: root
-Password: password
-Port:     3306
-```
-
-## Run tests
-
-```powershell
-.\mvnw.cmd test
-```
-
-## Run with Docker
-
-From the project root:
-
-```powershell
-docker compose up -d --build
-```
+Replace the JWT key on every backend instance and restart the service. Users must sign in again. Revoke exposed Groq keys in the Groq console and review usage. If a backend image was built with a real `.env` in the build directory, rebuild it from this configuration and retire the affected image.
