@@ -7,7 +7,9 @@ services:
     container_name: mealmate-mysql
 
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD locally}
+      MYSQL_USER: ${SPRING_DATASOURCE_USERNAME:-mealmate}
+      MYSQL_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:?Set SPRING_DATASOURCE_PASSWORD locally}
       MYSQL_DATABASE: mealmate
 
     ports:
@@ -18,7 +20,7 @@ services:
 
   backend:
     build:
-      context: ./mealmate-bk
+      context: ${MEALMATE_BACKEND_CONTEXT:-.}
 
     container_name: mealmate-backend
 
@@ -30,18 +32,18 @@ services:
 
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mealmate?createDatabaseIfNotExist=true&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME:-mealmate}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:?Set SPRING_DATASOURCE_PASSWORD locally}
       GROQ_API_KEY: ${GROQ_API_KEY:-}
       GROQ_MODEL: ${GROQ_MODEL:-openai/gpt-oss-20b}
 
-      security.jwt.secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET locally}
 
     restart: unless-stopped
 
   frontend:
     build:
-      context: ./mealmate-ui
+      context: ${MEALMATE_FRONTEND_CONTEXT:-../mealmate-ui}
 
     container_name: mealmate-frontend
 
