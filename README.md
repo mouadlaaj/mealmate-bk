@@ -16,6 +16,8 @@ GROQ_API_KEY=
 
 Groq is optional and enables recipe imports. Leave its entry empty to run the other features. The application uses the dedicated MySQL user above. For an existing database volume, create or update that user in MySQL, grant access to the `mealmate` schema and rotate the root password in MySQL before restarting. The container sets initial credentials only on a new data directory.
 
+The Groq key in an early commit was revoked before that commit and was included as a classroom example. To enable recipe imports, create your own key in the Groq Console and set `GROQ_API_KEY` in your local `.env` file or shell. Keep your key out of Git.
+
 ## Run with Docker
 
 Clone `mealmate-ui` next to this backend checkout. From the backend directory run:
